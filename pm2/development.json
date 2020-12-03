@@ -1,0 +1,21 @@
+{
+    "apps": [
+
+        {
+            "name": "riskgraph-api-server",
+            "script": "riskgraph-server.js",
+            "instances": 1,
+            "exec_mode": "fork",
+            "log_date_format": "YYYY-MM-DD HH:mm Z",
+            "env": {
+                "NODE_ENV": "development",
+                "PORT": 55628
+            },
+            "watch": [
+                "config",
+                "node_modules"
+            ]
+        }
+    ]
+}
+

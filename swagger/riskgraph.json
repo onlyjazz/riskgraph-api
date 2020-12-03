@@ -1,0 +1,27 @@
+{
+    "info": {
+        "title": "Swagger Flask Riskgraph API",
+        "version": "0.3.0",
+        "description": "Flask Riskgraph v.0.3.0",
+        "termsOfService": "http://clearclinica.com/terms/",
+        "contact": {
+            "email": "rivkar@flaskdata.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "host": "",
+    "basePath": "/",
+    "tags": [
+        {
+            "name": "FLASK RISKGRAPH",
+            "description": "All FLASK RISKGRAPH API calls. The API is based on SDIP – Simple Device Interface Protocol."
+        }
+    ],
+    "schemes": [
+        "http",
+        "https"
+    ]
+}

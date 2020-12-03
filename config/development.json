@@ -1,0 +1,48 @@
+{
+  "environment": {
+    "name": "Rivkar Development",
+    "mode": "Rivkar Development"
+  },
+  "database": {
+    "edc": {},
+    "flask": {
+      "connectionString": "postgres://postgres:9701485dl@localhost:5432/flask2",
+      "schema": "public"
+    },
+    "flaskMongo": {
+            "connectionString": "mongodb://mongo:9701485dl@localhost:27017/flask_prod_2_release?authSource=admin",
+            "connectionOptions": {
+            "autoIndex": false,
+            "useMongoClient": true,
+            "poolSize": 10,
+            "bufferMaxEntries": 0,
+            "reconnectInterval": 500,
+            "reconnectTries": 1.7976931348623157e+308
+        }
+    }
+  },
+  "server": {
+    "host": "::",
+    "port": 5604,
+    "timeZone": "America/Los_Angeles"
+  },
+  "firebase": {
+        "serverKey": "AAAAowlHIz4:APA91bHOx8IMRGc1lytF2vvi8tywxtlAJT2KBcEpmtvD9f4zadZa1pQmJ6xH2uk6kIADBzBssqv3ptkj336i6L1W2gAq1SjjKhJspxfX-w_x62f0wgEhzRE3K16BpSfbOXEqSfcOE4xE"
+    },    
+  "session": {
+    "disabled": true
+  },
+  "swagger": {
+    "enabled": true
+  },
+  "jwt": {
+    "certFile": "/etc/.flask/secret",
+    "sign": {
+      "alhgorithm": "HS384"
+    },
+    "options": {
+      "algorithms": "HS256,HS384"
+    }
+  },
+  "riskgraphSwaggerBasePath": "/"
+}
