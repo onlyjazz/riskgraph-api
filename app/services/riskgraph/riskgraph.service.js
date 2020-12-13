@@ -77,15 +77,17 @@ class RiskgraphService extends BaseService {
             locals.validations = [];
             async.series([
                 done => { // 1. levelOneAnomalyDetector
+                    //console.log("1. levelOneAnomalyDetector");
                     this.riskgraphTable.levelOneAnomalyDetector(dataObject, (error, result) => {
                         if (error) done(`[Flask Riskgraph] levelOneAnomalyDetector error ${error}`);
-                        else{
+                        else {
                             locals.validations = _.union(locals.validations, result);
                             done(null);
                         }
                     })
                 },
                 done => { // 2. levelTwoAnomalyDetector
+                    //console.log("2. levelTwoAnomalyDetector");
                     this.riskgraphTable.levelTwoAnomalyDetector(dataObject, (error, result) => {
                         if (error) done(`[Flask Riskgraph] levelTwoAnomalyDetector error ${error}`);
                         else{

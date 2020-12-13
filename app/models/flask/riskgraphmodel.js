@@ -67,6 +67,7 @@ class FlaskRiskgraphModel extends FlaskModelBase {
         locals.validations = [];
         async.series([
             done => { // 1. Timestamp validations
+            //console.log("1. Timestamp validations");
                 this.timestampValidation(locals.data, (error, timestampValidationCallback) => {
                    if(error) done('[FLASK RISKGRAPH] Error timestamp validations: ' + error);
                    else {
@@ -76,6 +77,7 @@ class FlaskRiskgraphModel extends FlaskModelBase {
                 });
             },
             done => { // 2. Get all keys from Array of jsons
+                //console.log("2. Get all keys from Array of jsons");
                 this.geyDataKeys(locals.data, (error, geyDataKeysCallback) => {
                     if(error) done('[FLASK RISKGRAPH] Error get data keys: ' + error);
                     else {
@@ -85,6 +87,7 @@ class FlaskRiskgraphModel extends FlaskModelBase {
                 });
             },
             done => { // 3. Missing values validations
+                //console.log("3. Missing values validations");
                 this.missingValuesValidation(locals.data, locals.dataKeys, (error, missingValuesValidationCallback) => {
                     if(error) done('[FLASK RISKGRAPH] Error missing values validations: ' + error);
                     else {
@@ -94,6 +97,7 @@ class FlaskRiskgraphModel extends FlaskModelBase {
                 });
             },
             done => { // 4. Out of Range validations
+                //console.log("4. Out of Range validations");
                 if(!locals.rangeData) return done(null);
                 this.outOfRangeValidation(locals.data, locals.rangeData, (error, outOfRangeValidationCallback) => {
                     if(error) done('[FLASK RISKGRAPH] Error out of range validations: ' + error);
@@ -124,11 +128,11 @@ class FlaskRiskgraphModel extends FlaskModelBase {
             } else {
                 //when:  Timestamp (k) < Timestamp (k-1) return  isAnomaly: ‘t’, reason: ‘Out of sequence’
                 if (index > 0 && data[index - 1].timestamp && row.timestamp < data[index - 1].timestamp) {
-                    locals.push({isAnomaly: true, reason: 'Out of sequence'});
+                    locals.push({isAnomaly: true, reason: '['+row.timestamp+'] Out of sequence'});
                 }
                 //when:  Timestamp (k) invalid timestamp return isAnomaly: ‘t’, reason: ‘Invalid timestamp’
                 if (!moment(row.timestamp).isValid()) {
-                    locals.push({isAnomaly: true, reason: 'Invalid timestamp'});
+                    locals.push({isAnomaly: true, reason: '['+row.timestamp+'] Invalid timestamp'});
                 }
             }
             nextRow();//Callback when 1 item is finished
@@ -150,7 +154,7 @@ class FlaskRiskgraphModel extends FlaskModelBase {
         data.map((row, index) => {
             dataKeys.map(key => {
                 //when:  value is null  return isAnomaly: ‘t’, reason: ‘Missing value’
-                if (!row[key]) validations.push({isAnomaly: true, reason: 'Missing value '+key});
+                if (!row[key]) validations.push({isAnomaly: true, reason: '['+key+'] Missing value'});
             });
         });
         riskgraphCallback(null, validations);
@@ -179,13 +183,14 @@ class FlaskRiskgraphModel extends FlaskModelBase {
      * @public
      */
     outOfRangeValidation ( data, rangeData, riskgraphCallback ) {
+        //console.log("outOfRangeValidation Function")
         let locals = {};
         locals.validations = [];
         rangeData.map(range => {
             locals.rangeKey = Object.keys(range)[0];
             data.map((row, index) => {
                 if (row[locals.rangeKey] && (row[locals.rangeKey] > range[locals.rangeKey].upperBound || row[locals.rangeKey] < range[locals.rangeKey].lowerBound))
-                    locals.validations.push({isAnomaly: true, reason: 'Out of range '+locals.rangeKey});
+                    locals.validations.push({isAnomaly: true, reason: '['+row[locals.rangeKey]+'] Out of range for '+locals.rangeKey});
             });
         });
         riskgraphCallback(null, locals.validations);
@@ -204,8 +209,9 @@ class FlaskRiskgraphModel extends FlaskModelBase {
         locals.validations = [];
         async.series([
             done => { // 1. Get all keys from Array of jsons
+                //console.log("1. Get all keys from Array of jsons");
                 this.geyDataKeys(locals.data, (error, geyDataKeysCallback) => {
-                    if(error) done('[FLASK ANALYTICS] Error get data keys: ' + error);
+                    if (error) done('[FLASK ANALYTICS] Error get data keys: ' + error);
                     else {
                         locals.dataKeys = geyDataKeysCallback;
                         done(null);
@@ -213,6 +219,7 @@ class FlaskRiskgraphModel extends FlaskModelBase {
                 });
             },
             done => { // 2. Group data by keys - create array for each key
+                //console.log("2. Group data by keys - create array for each key");
                 this.groupDataByKey(locals.data, locals.dataKeys, (error, groupDataByKeyCallback) => {
                     if(error) done('[FLASK ANALYTICS] Error grouop data by keys : ' + error);
                     else {
@@ -222,10 +229,11 @@ class FlaskRiskgraphModel extends FlaskModelBase {
                 });
             },
             done => { // 3. Get Distance for each value
+                //console.log("3. Get Distance for each value");
                 locals.this = this;
                 async.forEachOf(locals.groupData, function (group, index, nextGroup) {
-                    locals.this.getDistanceValidation(group, locals.t[index], (error, distanceValidationCallback) => {
-                        if(error) done('[FLASK ANALYTICS] Error get data distance for '+index+' values : ' + error);
+                    locals.this.getDistanceValidation(group, locals.t?locals.t[index]:1, index,(error, distanceValidationCallback) => {
+                        if (error) done('[FLASK ANALYTICS] Error get data distance for ' + index + ' values : ' + error);
                         else {
                             locals.validations = _.union(locals.validations, distanceValidationCallback);
                             nextGroup();//Callback when 1 item is finished
@@ -264,10 +272,11 @@ class FlaskRiskgraphModel extends FlaskModelBase {
      * @description Get Distance Validation
      * @param {object} data - data for analytics of 1 key
      * @param {integer} t - tolerance
+     * @param {string} param - the parameter of data (one of data keys)
      * @param {riskgraphCallback} riskgraphCallback
      * @public
      */
-    getDistanceValidation ( data, t, riskgraphCallback ) {
+    getDistanceValidation ( data, t, param, riskgraphCallback ) {
         //Get Distance for each data object
         //data = [{data1:1},{data1:44},{data1:55}]
         if(!t) t = 1;
@@ -286,7 +295,7 @@ class FlaskRiskgraphModel extends FlaskModelBase {
         dataDistance.map(row=> {
             // when:  Distance(k) > cutoff return isAnomaly: ‘t’, reason: ‘Way out man’
             if(row.distance > locals.midDistance)
-                locals.validations.push({isAnomaly: true, reason: 'Way out man '+row.value});
+                locals.validations.push({isAnomaly: true, reason: '['+row.value+'] Way out man for '+ param});
         });
         riskgraphCallback(null, locals.validations);
     };
