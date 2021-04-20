@@ -52,7 +52,7 @@ class LoginController extends Core.Controller {
      * /auth/authorize:
      *    post:
      *      tags:
-     *        - FLASK
+     *        - FLASK AUTHORIZE
      *      summary: User authentication
      *      description: Check user credential and generate access token
      *      consumes:
@@ -125,7 +125,7 @@ class LoginController extends Core.Controller {
      * /auth/logout:
      *    post:
      *      tags:
-     *        - FLASK
+     *        - FLASK AUTHORIZE
      *      summary: User logout
      *      description: Destroy session of current Flask user
      *      consumes:

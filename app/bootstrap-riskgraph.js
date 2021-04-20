@@ -191,7 +191,7 @@ class WebInitModule extends ApplicationBootstrap {
             let options = {};
             options.apis = [
                 './app/controllers/swaggerdefinitions.js',
-                './app/controllers/riskgraph/**/*.js',
+                './app/controllers/**/*.js',
             ];
             options.defDataFilePath = './riskgraph.json';
             // determine the base path for swagger in proxying case

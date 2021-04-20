@@ -108,5 +108,4 @@
  *      example: gjEvzdrSnCo4
  *      schema:
  *        type: string
- *
  */
