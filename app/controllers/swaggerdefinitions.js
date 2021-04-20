@@ -33,6 +33,24 @@
  *      toleranceData:
  *        type: object
  *        example: {"data1":2, "data3": 4}
+ *  OmdenaDataRequestRpc:
+ *    type: object
+ *    required:
+ *      - endpoint
+ *      - data
+ *      - models
+ *      - ranges
+ *      - level
+ *    properties:
+ *      endpoint:
+ *        type: string
+ *        example : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+ *      data:
+ *        type: object
+ *        example: {"timestamp":"2021-05-25","key1":"value1","key2":"value2","key3":"value3"}
+ *      models:
+ *        type: array
+ *        example: [{"y":"key1","x":"key1"}, {"y":"key2", "x":"key2"}]
  *# Common responses
  *  responses:
  *    '404':

@@ -5,10 +5,6 @@
  * Load Core MVC Library and Application Facade
  */
 const Core = require('dft-mvc-core');
-/**
- * Helper module to determine data types
- */
-const is = require('s-is');
 
 /**
  * Require User authentication
@@ -17,15 +13,10 @@ const is = require('s-is');
  */
 const JWTAuthorizedBase = require('../jwtauthorizedbase');
 
-const RiskgraphService = require('../../services/riskgraph/riskgraph.service');
+const OmdenaService = require('../../services/riskgraph/omdena.service');
 
 
-/**
- * Test Controller
- *
- *
- */
-class RiskgraphController extends JWTAuthorizedBase {
+class OmdenaController extends JWTAuthorizedBase {
 
     /**
      * @description Flask Controller constructor
@@ -54,10 +45,10 @@ class RiskgraphController extends JWTAuthorizedBase {
             // different endpoints
             case 'POST':
                 switch (id) {
-                    // Find risk data
-                    default: this.callDetectors(callback); break;
-                    // Find risk data - v0 level-1
-                    case 'level-1': this.callDetectors(callback); break
+                    // Call omdena API
+                    default: this.level1(callback); break;
+                    // Call omdena API - v1 level-1
+                    case 'level-1': this.level1(callback); break
                 }
                 // first switch
                 break;
@@ -66,12 +57,12 @@ class RiskgraphController extends JWTAuthorizedBase {
 
     /**
      * @swagger
-     *  /api/v0/level-1:
+     *  /api/v1/level-1:
      *    post:
      *      tags:
-     *         - FLASK RISKGRAPH
-     *      summary: Level 1 Anomaly Detector - Typing, missing data, out-of-sequence and out-of-range-based anomalies
-     *      description: Algorithm for anomaly detection. Distance based. Single variable
+     *         - FLASK OMDENA
+     *      summary: Level 1 Anomaly Detector -single and multivariate anomaly detection
+     *      description: Level 1 Anomaly Detector -single and multivariate anomaly detection
      *      consumes:
      *          - application/json
      *      produces:
@@ -84,7 +75,7 @@ class RiskgraphController extends JWTAuthorizedBase {
      *        description: Data Object
      *        required: true
      *        schema:
-     *          $ref: '#/definitions/FlaskRiskgraphDataRequestRpc'
+     *          $ref: '#/definitions/OmdenaDataRequestRpc'
      *      responses:
      *        '400':
      *          $ref: '#/definitions/responses/400'
@@ -98,25 +89,29 @@ class RiskgraphController extends JWTAuthorizedBase {
      *          description: Successful operation
      */
     /**
-     * Algorithm for anomaly detection: Distance based. Single variable
+     * Anomaly Detector - single and multivariate anomaly detection
      *
      * @param {Function} callback
      * @public
      */
-    callDetectors ( callback ) {
+    level1 ( callback ) {
         // required fields
-        let { data } = this.request.body;
+        let { data, endpoint, models, ranges, level } = this.request.body;
         // validation
         let errorMessage = '';
         if (!(data)) errorMessage += (errorMessage ?',':'')+'[data]';
+        if (!(endpoint)) errorMessage += (errorMessage ?',':'')+'[endpoint]';
+        if (!(models)) errorMessage += (errorMessage ?',':'')+'[models]';
+        //if (!(ranges)) errorMessage += (errorMessage ?',':'')+'[ranges]';
+        //if (!(level)) errorMessage += (errorMessage ?',':'')+'[level]';
         // validation error
         if (errorMessage) {
             errorMessage += ' parameter(s) is required.';
             return callback(new Core.Error.HTTPError(errorMessage, 400));
         }
 
-        const riskgraphService = new RiskgraphService();
-        riskgraphService.callDetectors(this.request.body)
+        const omdenaService = new OmdenaService();
+        omdenaService.level1(this.request.body)
             .then(success => {
                 this.view(Core.View.jsonView(success));
                 callback();
@@ -133,4 +128,4 @@ class RiskgraphController extends JWTAuthorizedBase {
  *
  * @type {Function}
  */
-module.exports = RiskgraphController;
+module.exports = OmdenaController;

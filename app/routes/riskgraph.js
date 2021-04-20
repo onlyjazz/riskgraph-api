@@ -7,6 +7,7 @@
  */
 module.exports = function () {
     return {
-        'all|/riskgraph/:id': 'riskgraph/riskgraph.js',
+        'all|/api/v0/:id': 'riskgraph/riskgraph.js',
+        'all|/api/v1/:id': 'riskgraph/omdena.js',
     };
 };

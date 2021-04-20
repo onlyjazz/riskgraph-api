@@ -17,11 +17,15 @@
     "tags": [
         {
             "name": "FLASK RISKGRAPH",
-            "description": "All FLASK RISKGRAPH API calls. The API is based on SDIP – Simple Device Interface Protocol."
+            "description": "All FLASK RISKGRAPH API calls."
+        },
+        {
+            "name": "FLASK OMDENA",
+            "description": "All FLASK OMDENA API calls. Anomaly Detector."
         }
     ],
     "schemes": [
-        "http",
-        "https"
+        "https",
+        "http"
     ]
 }
