@@ -41,7 +41,7 @@ class OmdenaService extends BaseService {
     }
 
     /**
-     * Algorithm for anomaly detection: Distance based. Single variable
+     * Level 1 Anomaly Detector - Typing, missing data, out-of-sequence and out-of-range-based anomalies
      * @return {Promise} isAnomaly list
      *
      */
@@ -49,22 +49,79 @@ class OmdenaService extends BaseService {
         return new Promise((resolve, reject) => {
             let locals = {};
             locals.result = {};
-            locals.result.data = {};
-            locals.result.data.result = [];
+            locals.result.data = [];
             async.series([
                 done => { // 1. build result
                     locals.result.endpoint = dataObject.endpoint;
                     locals.result.score = Math.floor(Math.random() * 100);
-                    locals.result.data.timestamp = dataObject.data.timestamp;
-                    async.forEachLimit(Object.keys(dataObject.data), 1, function (key, nextKey) {
-                        if (key == 'timestamp') nextKey();
-                        else {
-                            let isAnomalyData = {};
-                            isAnomalyData[key] = dataObject.data[key];
-                            isAnomalyData.isAnomaly = (Math.random() < 0.5);
-                            locals.result.data.result.push(isAnomalyData);
-                            nextKey();
-                        }
+                    async.forEachLimit(dataObject.data, 1, function (item, nextItem) {
+                        let isAnomalyData = item;
+                        isAnomalyData.isAnomaly = (Math.random() < 0.5);
+                        locals.result.data.push(isAnomalyData);
+                        nextItem();
+
+                    }, function () {
+                        done(null);
+                    });
+                },
+            ], error => {
+                if (error) reject(error);
+                else resolve(locals.result);
+            });
+        });
+    }
+
+    /**
+     * Level 1 Anomaly Detector - Typing, missing data, out-of-sequence and out-of-range-based anomalies
+     * @return {Promise} isAnomaly list
+     *
+     */
+    level2(dataObject) {
+        return new Promise((resolve, reject) => {
+            let locals = {};
+            locals.result = {};
+            locals.result.data = [];
+            async.series([
+                done => { // 1. build result
+                    locals.result.endpoint = dataObject.endpoint;
+                    locals.result.score = Math.floor(Math.random() * 100);
+                    async.forEachLimit(dataObject.data, 1, function (item, nextItem) {
+                        let isAnomalyData = item;
+                        isAnomalyData.isAnomaly = (Math.random() < 0.5);
+                        locals.result.data.push(isAnomalyData);
+                        nextItem();
+
+                    }, function () {
+                        done(null);
+                    });
+                },
+            ], error => {
+                if (error) reject(error);
+                else resolve(locals.result);
+            });
+        });
+    }
+
+    /**
+     * Level 1 Anomaly Detector - Typing, missing data, out-of-sequence and out-of-range-based anomalies
+     * @return {Promise} isAnomaly list
+     *
+     */
+    level3(dataObject) {
+        return new Promise((resolve, reject) => {
+            let locals = {};
+            locals.result = {};
+            locals.result.data = [];
+            async.series([
+                done => { // 1. build result
+                    locals.result.endpoint = dataObject.endpoint;
+                    locals.result.score = Math.floor(Math.random() * 100);
+                    async.forEachLimit(dataObject.data, 1, function (item, nextItem) {
+                        let isAnomalyData = item;
+                        isAnomalyData.isAnomaly = (Math.random() < 0.5);
+                        locals.result.data.push(isAnomalyData);
+                        nextItem();
+
                     }, function () {
                         done(null);
                     });

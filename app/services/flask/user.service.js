@@ -271,6 +271,7 @@ class UserService extends FlaskService {
                     // NOTE within PHP crypt used different prefix bytes. To have ability to compare password need to replace first bytes.
                     let fixPHPcryptPass = user.password.replace('$2y$', '$2a$');
                     bcrypt.compare(String(password), fixPHPcryptPass, (error, result) => {
+                        console.log('bcrypt.compare' + result);
                         if (error) return done(error);
                         if (!result) {
                             return done('Password does not match for user');
@@ -280,12 +281,14 @@ class UserService extends FlaskService {
                     });
                 },
                 done => { // local.token => generate JWT token
+                    console.log('local.equal' + local.equal);
                     if (local.equal) {
                         this.userJWTTokensTable.createAccessToken(user, (error, result) => {
                             if (error) return done(error);
                             if (!result) {
                                 return done('Failed to generate JWT Token.');
                             }
+                            console.log('local.equal result' + result);
                             local.token = {
                                 token: result.token,
                                 expired: result.expired,

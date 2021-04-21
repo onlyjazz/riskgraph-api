@@ -33,24 +33,54 @@
  *      toleranceData:
  *        type: object
  *        example: {"data1":2, "data3": 4}
- *  OmdenaDataRequestRpc:
+ *  OmdenaV1Level1DataRequestRpc:
+ *    type: object
+ *    required:
+ *      - endpoint
+ *      - data
+ *      - ranges
+ *    properties:
+ *      endpoint:
+ *        type: string
+ *        example : "STUDY-NCT0102’"
+ *      data:
+ *        type: array
+ *        example: [{"timestamp":"t","key":"value"}, {"timestamp":"t","key":"value"}, {"timestamp":"t","key":"value"}]
+ *      ranges:
+ *        type: array
+ *        example: [{ "key1": {"lowerBound": 0, "upperBound": 10}},{"key2": {"lowerBound": 0, "upperBound": 10}}]
+ *  OmdenaV1Level2DataRequestRpc:
  *    type: object
  *    required:
  *      - endpoint
  *      - data
  *      - models
- *      - ranges
- *      - level
  *    properties:
  *      endpoint:
  *        type: string
- *        example : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+ *        example : "STUDY-NCT0102’"
  *      data:
- *        type: object
- *        example: {"timestamp":"2021-05-25","key1":"value1","key2":"value2","key3":"value3"}
+ *        type: array
+ *        example: [{"metadata":"m", "timestamp":"t", "dose":"value"}, {"metadata":"m", "timestamp":"t", "dose":"value"}]
  *      models:
  *        type: array
- *        example: [{"y":"key1","x":"key1"}, {"y":"key2", "x":"key2"}]
+ *        example: [{"y":"key","x":"key"}, {"y":"key", "x":"key"}]
+ *  OmdenaV1Level3DataRequestRpc:
+ *    type: object
+ *    required:
+ *      - endpoint
+ *      - data
+ *      - models
+ *    properties:
+ *      endpoint:
+ *        type: string
+ *        example : "STUDY-NCT0102’"
+ *      data:
+ *        type: array
+ *        example: [	{"metadata":"m", "timestamp":"t", "dose":"value", "age":"value"}, {"metadata":"m", "timestamp":"t", "dose":"value", "age":"value"}, {"metadata":"m", "timestamp":"t", "dose":"value", "age":"value"} , {"metadata":"m", "timestamp":"t", "dose":"value", "age":"value"} ]
+ *      models:
+ *        type: array
+ *        example: [{"y":"key","x":"key"}, {"y":"key", "x":"key"}]
  *# Common responses
  *  responses:
  *    '404':

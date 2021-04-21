@@ -70,7 +70,7 @@ class RiskgraphController extends JWTAuthorizedBase {
      *    post:
      *      tags:
      *         - FLASK RISKGRAPH
-     *      summary: Level 1 Anomaly Detector - Typing, missing data, out-of-sequence and out-of-range-based anomalies
+     *      summary: Level 1 Anomaly Detector - missing data, out-of-sequence and out-of-range-based anomalies
      *      description: Algorithm for anomaly detection. Distance based. Single variable
      *      consumes:
      *          - application/json

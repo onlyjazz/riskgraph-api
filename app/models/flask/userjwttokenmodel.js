@@ -148,6 +148,8 @@ class UserJWTTokenModel extends FlaskModelBase {
             date.setHours(date.getHours() + 3);
             let code = Utils.randomString(32);
             ApplicationFacade.instance.jwt.sign({sub: code, exp: date.valueOf()}, (error, jwtToken) => {
+                console.log("generateNewToken error" +error);
+                console.log("generateNewToken jwtToken" +jwtToken);
                 if (!error && jwtToken) {
                     let accesToken = {
                         expired: date,
