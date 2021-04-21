@@ -45,7 +45,7 @@
  *        example : "STUDY-NCT0102’"
  *      data:
  *        type: array
- *        example: [{"timestamp":"t","key":"value"}, {"timestamp":"t","key":"value"}, {"timestamp":"t","key":"value"}]
+ *        example: [{"metadata":"m","timestamp":"t","key":"value"}, {"metadata":"m","timestamp":"t","key":"value"}, {"metadata":"m","timestamp":"t","key":"value"}]
  *      ranges:
  *        type: array
  *        example: [{ "key1": {"lowerBound": 0, "upperBound": 10}},{"key2": {"lowerBound": 0, "upperBound": 10}}]
