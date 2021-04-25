@@ -45,8 +45,11 @@
  *        example : "STUDY-NCT0102’"
  *      data:
  *        type: array
- *        example: [{"metadata":"m","timestamp":"t","key":"value"}, {"metadata":"m","timestamp":"t","key":"value"}, {"metadata":"m","timestamp":"t","key":"value"}]
- *      ranges:
+ *        example: [{"metadata":"m","timestamp":"t","key1":"value"}, {"metadata":"m","timestamp":"t","key1":"value"}, {"metadata":"m","timestamp":"t","key1":"value"}]
+ *      categoric:
+ *        type: array
+ *        example: [{"key1": ["Y", "N"]}, {"key2": [1,2,3,4]}]
+ *      numeric:
  *        type: array
  *        example: [{ "key1": {"lowerBound": 0, "upperBound": 10}},{"key2": {"lowerBound": 0, "upperBound": 10}}]
  *  OmdenaV1Level2DataRequestRpc:

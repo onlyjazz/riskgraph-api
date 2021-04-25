@@ -100,12 +100,11 @@ class OmdenaController extends JWTAuthorizedBase {
      */
     level1 ( callback ) {
         // required fields
-        let { data, endpoint, ranges } = this.request.body;
+        let { data, endpoint } = this.request.body;
         // validation
         let errorMessage = '';
         if (!(data)) errorMessage += (errorMessage ?',':'')+'[data]';
         if (!(endpoint)) errorMessage += (errorMessage ?',':'')+'[endpoint]';
-        if (!(ranges)) errorMessage += (errorMessage ?',':'')+'[ranges]';
         // validation error
         if (errorMessage) {
             errorMessage += ' parameter(s) is required.';
