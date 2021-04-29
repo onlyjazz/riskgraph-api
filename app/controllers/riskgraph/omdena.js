@@ -163,12 +163,12 @@ class OmdenaController extends JWTAuthorizedBase {
      */
     level2 ( callback ) {
         // required fields
-        let { data, endpoint, models } = this.request.body;
+        let { data, endpoint, model } = this.request.body;
         // validation
         let errorMessage = '';
         if (!(data)) errorMessage += (errorMessage ?',':'')+'[data]';
         if (!(endpoint)) errorMessage += (errorMessage ?',':'')+'[endpoint]';
-        if (!(models)) errorMessage += (errorMessage ?',':'')+'[models]';
+        if (!(model)) errorMessage += (errorMessage ?',':'')+'[model]';
         // validation error
         if (errorMessage) {
             errorMessage += ' parameter(s) is required.';
@@ -227,12 +227,12 @@ class OmdenaController extends JWTAuthorizedBase {
      */
     level3 ( callback ) {
         // required fields
-        let { data, endpoint, models } = this.request.body;
+        let { data, endpoint, model } = this.request.body;
         // validation
         let errorMessage = '';
         if (!(data)) errorMessage += (errorMessage ?',':'')+'[data]';
         if (!(endpoint)) errorMessage += (errorMessage ?',':'')+'[endpoint]';
-        if (!(models)) errorMessage += (errorMessage ?',':'')+'[models]';
+        if (!(model)) errorMessage += (errorMessage ?',':'')+'[model]';
         // validation error
         if (errorMessage) {
             errorMessage += ' parameter(s) is required.';

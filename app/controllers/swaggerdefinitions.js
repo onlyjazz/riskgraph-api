@@ -65,15 +65,15 @@
  *      data:
  *        type: array
  *        example: [{"metadata":"m", "timestamp":"t", "dose":"value"}, {"metadata":"m", "timestamp":"t", "dose":"value"}]
- *      models:
- *        type: array
- *        example: [{"model":"modelName"}, {"model":"modelName"}]
+ *      model:
+ *        type: string
+ *        example: modelName
  *  OmdenaV1Level3DataRequestRpc:
  *    type: object
  *    required:
  *      - endpoint
  *      - data
- *      - models
+ *      - model
  *    properties:
  *      endpoint:
  *        type: string
@@ -81,9 +81,9 @@
  *      data:
  *        type: array
  *        example: [	{"metadata":"m", "timestamp":"t", "dose":"value", "age":"value"}, {"metadata":"m", "timestamp":"t", "dose":"value", "age":"value"}, {"metadata":"m", "timestamp":"t", "dose":"value", "age":"value"} , {"metadata":"m", "timestamp":"t", "dose":"value", "age":"value"} ]
- *      models:
- *        type: array
- *        example: [{"model":"modelName"}, {"model":"modelName"}]
+ *      model:
+ *        type: string
+ *        example: modelName
  *# Common responses
  *  responses:
  *    '404':
