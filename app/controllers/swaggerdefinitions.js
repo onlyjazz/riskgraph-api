@@ -67,7 +67,7 @@
  *        example: [{"metadata":"m", "timestamp":"t", "dose":"value"}, {"metadata":"m", "timestamp":"t", "dose":"value"}]
  *      models:
  *        type: array
- *        example: [{"y":"key","x":"key"}, {"y":"key", "x":"key"}]
+ *        example: [{"model":"modelName"}, {"model":"modelName"}]
  *  OmdenaV1Level3DataRequestRpc:
  *    type: object
  *    required:
@@ -83,7 +83,7 @@
  *        example: [	{"metadata":"m", "timestamp":"t", "dose":"value", "age":"value"}, {"metadata":"m", "timestamp":"t", "dose":"value", "age":"value"}, {"metadata":"m", "timestamp":"t", "dose":"value", "age":"value"} , {"metadata":"m", "timestamp":"t", "dose":"value", "age":"value"} ]
  *      models:
  *        type: array
- *        example: [{"y":"key","x":"key"}, {"y":"key", "x":"key"}]
+ *        example: [{"model":"modelName"}, {"model":"modelName"}]
  *# Common responses
  *  responses:
  *    '404':
